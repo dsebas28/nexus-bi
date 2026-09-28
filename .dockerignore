@@ -1,0 +1,16 @@
+.venv/
+.git/
+.env
+.env.*
+!.env.example
+data/
+notebooks/
+tests/
+docs/
+**/__pycache__/
+**/*.pyc
+**/artifacts/
+.pytest_cache/
+.ipynb_checkpoints/
+.vscode/
+.idea/

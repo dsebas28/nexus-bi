@@ -1,0 +1,66 @@
+# NEXUS BI stack.
+#
+#   cp .env.example .env        # then set POSTGRES_PASSWORD
+#   docker compose up --build   # first run builds the database (~5-10 min), then serves the app
+#   open http://localhost:8000
+#
+# Services
+#   db    PostgreSQL 18 with a persistent volume
+#   init  one-shot job: schema -> pipeline (downloads Olist) -> views -> ML models; skipped when already built
+#   api   FastAPI + dashboard on port 8000, started once init has finished
+name: nexus-bi
+
+x-app: &app
+  build: .
+  image: nexus-bi:latest
+  env_file: .env
+  environment:
+    POSTGRES_HOST: db
+    POSTGRES_PORT: "5432"
+    # A local Ollama running on the host machine (optional, free AI mode).
+    OLLAMA_URL: ${OLLAMA_URL_DOCKER:-http://host.docker.internal:11434}
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-nexus_bi}
+      POSTGRES_USER: ${POSTGRES_USER:-nexus_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql
+    ports:
+      - "${DB_PORT_HOST:-5433}:5432"      # 5433 on the host, so it never clashes with a local PostgreSQL
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  init:
+    <<: *app
+    command: ["python", "-m", "data_pipeline.setup_db"]
+    volumes:
+      - rawdata:/app/data/raw
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    <<: *app
+    ports:
+      - "${API_PORT_HOST:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  rawdata:

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEXUS BI Dashboard</title>
+  <meta name="description" content="NEXUS BI: AI-Powered Business Intelligence Platform over the Olist e-commerce dataset.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script>
+    // Apply the saved theme before first paint (no flash). Light is the default.
+    try { if (new URLSearchParams(location.search).get("theme") === "dark" || localStorage.getItem("nexus-theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js" defer></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a class="brand" href="index.html">
+        <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true">
+          <rect width="34" height="34" rx="9" fill="var(--brand)"/>
+          <path d="M9 24V10l16 14V10" fill="none" stroke="var(--brand-ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>
+          <span class="brand-name">NEXUS BI</span><br>
+          <span class="brand-sub">AI-Powered Business Intelligence Platform</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav"></nav>
+
+      <div class="sidebar-foot" id="sidebar-foot">
+        <span>Olist e-commerce data</span><br>
+        <span id="data-window">Loading data window…</span><br>
+        <a href="/docs" target="_blank" rel="noopener">API documentation</a>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <button class="btn btn-quiet btn-icon menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false" aria-label="Open navigation">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <div class="title-block">
+            <h1 id="view-title">Overview</h1>
+            <p id="view-subtitle"></p>
+          </div>
+        </div>
+
+        <form class="filters" id="filters" aria-label="Global filters" onsubmit="return false">
+          <div class="field">
+            <label for="f-period">Period</label>
+            <select class="select" id="f-period"></select>
+          </div>
+          <div class="field">
+            <label for="f-state">State</label>
+            <select class="select" id="f-state"><option value="">All states</option></select>
+          </div>
+          <div class="field">
+            <label for="f-category">Category</label>
+            <select class="select" id="f-category"><option value="">All categories</option></select>
+          </div>
+          <button type="button" class="btn btn-quiet" id="f-reset">Reset</button>
+          <button type="button" class="btn btn-quiet btn-icon" id="theme-toggle" aria-pressed="false" aria-label="Dark mode">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          </button>
+        </form>
+      </header>
+
+      <section class="ribbon" id="ribbon" aria-label="Period selector">
+        <div class="ribbon-head">
+          <p class="ribbon-period" id="ribbon-period" aria-live="polite"></p>
+          <span class="ribbon-legend">
+            <span><i style="background:var(--brand)"></i>Selected period</span>
+            <span><i style="background:color-mix(in srgb, var(--brand) 38%, var(--surface))"></i>Compared with</span>
+            <span class="ribbon-hint">Click a month, or drag across months, to change the period</span>
+          </span>
+        </div>
+        <svg id="ribbon-svg" role="group" aria-label="Monthly revenue, one bar per complete month"></svg>
+      </section>
+
+      <main class="view" id="view" tabindex="-1"></main>
+    </div>
+  </div>
+</body>
+</html>

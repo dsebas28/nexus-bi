@@ -1,0 +1,58 @@
+/* Entry page. Shares tokens and base styles with the dashboard. */
+
+.landing { max-width: 1120px; margin: 0 auto; padding: 0 var(--sp-5); }
+
+.l-header { display: flex; justify-content: space-between; align-items: center; padding: var(--sp-5) 0; }
+.l-links { display: flex; gap: var(--sp-4); align-items: center; }
+.l-links a:not(.btn) { color: var(--ink-2); text-decoration: none; font-weight: 500; font-size: var(--fs-sm); }
+.l-links a:not(.btn):hover { color: var(--ink); }
+.l-cta { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); text-decoration: none; height: 40px; padding: 0 var(--sp-4); }
+.l-cta:hover { border-color: var(--brand); filter: brightness(1.08); }
+
+/* The name is set large and tight: the type is the hero. */
+.l-hero { padding: var(--sp-7) 0 var(--sp-6); }
+.l-hero h1 {
+  font-size: clamp(3.5rem, 11vw, 8.5rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  color: var(--brand);
+}
+.l-sub { font-size: clamp(1.15rem, 2.4vw, 1.6rem); font-weight: 500; margin-top: var(--sp-3); letter-spacing: -0.01em; }
+.l-lede { max-width: 62ch; color: var(--ink-2); font-size: var(--fs-md); margin-top: var(--sp-4); }
+
+.l-ribbon { margin: var(--sp-6) 0 0; }
+.l-ribbon svg { display: block; width: 100%; height: 120px; }
+.l-ribbon rect { fill: color-mix(in srgb, var(--brand) 70%, var(--surface)); }
+.l-ribbon rect.peak { fill: var(--brand); }
+.l-ribbon text { font-family: var(--font); font-size: 11px; fill: var(--ink-3); }
+.l-ribbon figcaption { font-size: var(--fs-sm); color: var(--ink-2); margin-top: var(--sp-2); }
+
+.l-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: var(--sp-5) 0 0; border-top: 1px solid var(--line); }
+.l-facts div { padding: var(--sp-4) var(--sp-4) 0 0; }
+.l-facts dt { font-size: var(--fs-sm); color: var(--ink-2); }
+.l-facts dd { margin: 2px 0 0; font-size: var(--fs-xl); font-weight: 700; letter-spacing: -0.02em; }
+
+.l-section { padding: var(--sp-6) 0; border-top: 1px solid var(--line); }
+.l-section h2 { font-size: var(--fs-lg); font-weight: 700; letter-spacing: -0.015em; margin-bottom: var(--sp-4); }
+
+.l-modules { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--sp-6); }
+.l-modules a { display: grid; grid-template-columns: 140px 1fr; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; }
+.l-modules a:hover b { color: var(--brand); }
+.l-modules span { color: var(--ink-2); font-size: var(--fs-sm); }
+
+/* A real sequence, so it is numbered. */
+.l-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); counter-reset: step; }
+.l-flow li { counter-increment: step; padding: var(--sp-3) var(--sp-3) var(--sp-3) 0; border-top: 3px solid var(--brand-soft); display: flex; flex-direction: column; gap: 2px; }
+.l-flow li::before { content: counter(step); font-size: var(--fs-xs); color: var(--brand); font-weight: 700; }
+.l-flow span { font-size: var(--fs-xs); color: var(--ink-2); }
+
+.l-footer { padding: var(--sp-5) 0 var(--sp-7); border-top: 1px solid var(--line); font-size: var(--fs-xs); color: var(--ink-3); max-width: 80ch; }
+
+@media (max-width: 860px) {
+  .l-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .l-modules { grid-template-columns: minmax(0, 1fr); }
+  .l-modules a { grid-template-columns: 1fr; gap: 2px; }
+  .l-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .l-links a:not(.btn) { display: none; }
+}

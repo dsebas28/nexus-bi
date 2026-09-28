@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEXUS BI</title>
+  <meta name="description" content="NEXUS BI: AI-Powered Business Intelligence Platform over the Olist e-commerce dataset.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <script>
+    try { if (new URLSearchParams(location.search).get("theme") === "dark" || localStorage.getItem("nexus-theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}
+  </script>
+  <script type="module" src="js/landing.js"></script>
+</head>
+<body class="landing">
+  <header class="l-header">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true">
+        <rect width="34" height="34" rx="9" fill="var(--brand)"/>
+        <path d="M9 24V10l16 14V10" fill="none" stroke="var(--brand-ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name">NEXUS BI</span>
+    </a>
+    <nav class="l-links">
+      <a href="/docs">API</a>
+      <a class="btn l-cta" href="dashboard.html">Open the dashboard</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="l-hero">
+      <h1>NEXUS BI</h1>
+      <p class="l-sub">AI-Powered Business Intelligence Platform</p>
+      <p class="l-lede">Sales, customers, logistics and machine-learning models for Olist, a Brazilian e-commerce
+        marketplace. Every figure on these pages is computed from the data stored in PostgreSQL.</p>
+      <figure class="l-ribbon">
+        <svg id="l-ribbon" role="img" aria-label="Monthly revenue across the reliable data window"></svg>
+        <figcaption id="l-ribbon-caption">Loading monthly revenue…</figcaption>
+      </figure>
+      <dl class="l-facts" id="l-facts" aria-live="polite"></dl>
+    </section>
+
+    <section class="l-section">
+      <h2>What you can answer</h2>
+      <ul class="l-modules" id="l-modules">
+        <li><a href="dashboard.html#/ask"><b>Ask your data</b><span>Questions in plain language, answered with SQL you can inspect and figures checked against the results.</span></a></li>
+        <li><a href="dashboard.html#/overview"><b>Overview</b><span>Seven KPIs against the previous period and the year before, with findings computed for the period.</span></a></li>
+        <li><a href="dashboard.html#/sales"><b>Sales</b><span>Revenue, orders, ticket size, categories and the weekly buying rhythm.</span></a></li>
+        <li><a href="dashboard.html#/customers"><b>Customers</b><span>New and returning buyers, lifetime value and cohort retention.</span></a></li>
+        <li><a href="dashboard.html#/products"><b>Products</b><span>Best sellers, most profitable, and products that stopped selling.</span></a></li>
+        <li><a href="dashboard.html#/geography"><b>Geography</b><span>An interactive map of sales, growth and delivery performance.</span></a></li>
+        <li><a href="dashboard.html#/segments"><b>Segments</b><span>RFM segments with thresholds taken from the real repurchase cycle.</span></a></li>
+        <li><a href="dashboard.html#/churn"><b>Churn risk</b><span>Who is unlikely to buy again, and why, with honest model metrics.</span></a></li>
+        <li><a href="dashboard.html#/forecast"><b>Forecast</b><span>Eight weeks of daily revenue, with a range taken from past errors.</span></a></li>
+        <li><a href="dashboard.html#/anomalies"><b>Anomalies</b><span>Days, products and customers that broke their own pattern.</span></a></li>
+        <li><a href="dashboard.html#/quality"><b>Data quality</b><span>Every problem found in the raw files, and what was done about it.</span></a></li>
+      </ul>
+    </section>
+
+    <section class="l-section">
+      <h2>How the numbers are made</h2>
+      <ol class="l-flow">
+        <li><b>Raw files</b><span>Nine Olist CSV files</span></li>
+        <li><b>Validation and cleaning</b><span>Every fix is logged</span></li>
+        <li><b>PostgreSQL</b><span>Normalised model and SQL views</span></li>
+        <li><b>Models</b><span>Segments, churn, forecast, anomalies</span></li>
+        <li><b>API</b><span>Read-only FastAPI</span></li>
+        <li><b>Dashboard</b><span>What you are looking at</span></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="l-footer">
+    <p>Data: Olist Brazilian E-Commerce Public Dataset (CC BY-NC-SA 4.0). Profit and margin are estimates from a
+      synthetic cost model, because Olist does not publish product costs; every other metric is real.</p>
+  </footer>
+</body>
+</html>
