@@ -24,6 +24,22 @@ plain language with SQL you can inspect.
 
 ---
 
+## Documentación en español
+
+| Documento | Contenido |
+|---|---|
+| [**Guía del código**](docs/GUIA-DEL-CODIGO.md) | Cómo está construido: pipeline, capa SQL, machine learning, API y las guardas del analista de IA, con fragmentos del código explicados |
+| [**Base de datos (PostgreSQL)**](docs/BASE-DE-DATOS.md) | Esquemas, diagramas entidad-relación, decisiones de diseño y 13 consultas con su resultado real |
+
+| | |
+|---|---|
+| ![Modelo de ventas](docs/database/images/er-ventas.png) | ![Retención por cohortes](docs/database/images/04-cohortes-de-retencion.png) |
+| **Modelo entidad-relación** de las ventas | **Retención por cohortes** con `FILTER` y `age()` |
+| ![Segmentos RFM](docs/database/images/09-segmentos-rfm.png) | ![Plan de ejecución](docs/database/images/12-plan-de-ejecucion.png) |
+| **Segmentos de clientes** leídos del esquema `ml` | **EXPLAIN ANALYZE**: Index Only Scan sobre el índice compuesto |
+
+---
+
 ## Contents
 
 1. [Description](#1-description) · 2. [Business problem](#2-business-problem) · 3. [Objectives](#3-objectives) ·
@@ -109,7 +125,7 @@ NEXUS-BI/
 ├── frontend/             index.html · dashboard.html · css/ · js/ (app, state, charts, views/)
 ├── notebooks/            01 exploration · 02 EDA · 03 segmentation & churn · 04 forecasting · 05 anomalies
 ├── tests/                unit tests + integration tests (database and API)
-├── docs/                 architecture.md · screenshots/
+├── docs/                 architecture.md · BASE-DE-DATOS.md · GUIA-DEL-CODIGO.md · database/ · screenshots/
 ├── Dockerfile · docker-compose.yml · requirements.txt · requirements-dev.txt · .env.example
 ```
 
@@ -179,6 +195,14 @@ erDiagram
 
 Full design notes: [docs/architecture.md](docs/architecture.md).
 
+Entity-relationship diagrams, design decisions and 13 queries with their real results (in Spanish):
+[docs/BASE-DE-DATOS.md](docs/BASE-DE-DATOS.md).
+
+| | |
+|---|---|
+| ![Sales model](docs/database/images/er-ventas.png) | ![ML model](docs/database/images/er-ml.png) |
+| ![Pareto](docs/database/images/03-pareto.png) | ![CHECK constraint](docs/database/images/11-restricciones-check.png) |
+
 ## 9. Machine learning
 
 Every model is compared with simple baselines, evaluated on data it did not see, and written to the `ml`
@@ -244,6 +268,8 @@ Three modes, chosen automatically. All three share the same guards.
 | **Churn risk**: honest metrics, baselines, risk factors | **Forecast** with an 80% range and model comparison |
 | ![Anomalies](docs/screenshots/anomalies.png) | ![Dark mode](docs/screenshots/overview-dark.png) |
 | **Anomalies** marked on daily revenue | **Dark mode** |
+| ![Data quality](docs/screenshots/data-quality.png) | |
+| **Data quality** report produced by the pipeline | |
 
 ## 12. Installation
 

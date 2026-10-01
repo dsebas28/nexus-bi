@@ -1,0 +1,59 @@
+erDiagram
+    model_runs {
+        integer run_id PK
+        varchar model_name
+        varchar algorithm
+        date reference_date
+        timestamptz trained_at
+    }
+    model_evaluations {
+        integer run_id PK,FK
+        varchar candidate PK
+        varchar split PK
+        varchar metric PK
+        numeric value
+    }
+    segment_definitions {
+        integer run_id PK,FK
+        varchar segment PK
+        smallint display_order
+        text rule
+        text description
+        text recommendation
+    }
+    customer_segments {
+        integer run_id PK,FK
+        integer customer_key PK,FK
+        integer recency_days
+        integer frequency
+        numeric monetary
+        smallint r_score
+    }
+    churn_scores {
+        integer run_id PK,FK
+        integer customer_key PK,FK
+        numeric churn_probability
+        varchar risk_band
+        jsonb top_factors
+    }
+    sales_forecast {
+        integer run_id PK,FK
+        date forecast_date PK
+        numeric forecast
+        numeric lower_80
+        numeric upper_80
+    }
+    anomalies {
+        integer anomaly_id PK
+        integer run_id FK
+        varchar entity_type
+        integer entity_key
+        date period_start
+        date period_end
+    }
+    model_runs ||--o{ anomalies : "run_id"
+    model_runs ||--o{ sales_forecast : "run_id"
+    model_runs ||--o{ churn_scores : "run_id"
+    model_runs ||--o{ customer_segments : "run_id"
+    model_runs ||--o{ segment_definitions : "run_id"
+    model_runs ||--o{ model_evaluations : "run_id"

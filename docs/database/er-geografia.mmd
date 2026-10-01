@@ -1,0 +1,49 @@
+erDiagram
+    states {
+        char state_code PK
+        varchar state_name
+        varchar region
+    }
+    locations {
+        integer location_key PK
+        char state_code FK
+        char zip_code_prefix
+        varchar city
+        numeric latitude
+        numeric longitude
+    }
+    customers {
+        integer customer_key PK
+        integer location_key FK
+        char customer_uid
+    }
+    sellers {
+        integer seller_key PK
+        integer location_key FK
+        char seller_uid
+    }
+    orders {
+        integer order_key PK
+        integer customer_key FK
+        integer delivery_location_key FK
+        date purchase_date FK
+        char order_uid
+        varchar order_status
+        timestamp purchased_at
+        timestamp approved_at
+        timestamp delivered_carrier_at
+    }
+    calendar {
+        date date_key PK
+        smallint year
+        smallint quarter
+        smallint month
+        varchar month_name
+        char year_month
+    }
+    calendar ||--o{ orders : "purchase_date"
+    states ||--o{ locations : "state_code"
+    locations ||--o{ orders : "delivery_location_key"
+    locations ||--o{ customers : "location_key"
+    locations ||--o{ sellers : "location_key"
+    customers ||--o{ orders : "customer_key"

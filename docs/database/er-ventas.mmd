@@ -1,0 +1,66 @@
+erDiagram
+    orders {
+        integer order_key PK
+        integer customer_key FK
+        integer delivery_location_key FK
+        date purchase_date FK
+        char order_uid
+        varchar order_status
+        timestamp purchased_at
+        timestamp approved_at
+    }
+    order_items {
+        integer order_key PK,FK
+        smallint line_number PK
+        integer product_key FK
+        integer seller_key FK
+        timestamp shipping_limit_at
+        numeric unit_price
+        numeric freight_value
+    }
+    order_payments {
+        integer order_key PK,FK
+        smallint payment_sequential PK
+        varchar payment_type
+        smallint installments
+        numeric amount
+    }
+    order_reviews {
+        integer review_key PK
+        integer order_key FK
+        char review_uid
+        smallint score
+        varchar comment_title
+        text comment_message
+    }
+    customers {
+        integer customer_key PK
+        integer location_key FK
+        char customer_uid
+    }
+    products {
+        integer product_key PK
+        smallint category_key FK
+        char product_uid
+        smallint name_length
+        smallint description_length
+        smallint photos_qty
+    }
+    categories {
+        smallint category_key PK
+        varchar category_name_pt
+        varchar category_name_en
+        numeric estimated_cost_ratio
+    }
+    sellers {
+        integer seller_key PK
+        integer location_key FK
+        char seller_uid
+    }
+    categories ||--o{ products : "category_key"
+    products ||--o{ order_items : "product_key"
+    sellers ||--o{ order_items : "seller_key"
+    customers ||--o{ orders : "customer_key"
+    orders ||--o{ order_payments : "order_key"
+    orders ||--o{ order_items : "order_key"
+    orders ||--o{ order_reviews : "order_key"

@@ -1,0 +1,23 @@
+erDiagram
+    pipeline_runs {
+        integer run_id PK
+        timestamptz started_at
+        timestamptz finished_at
+        varchar status
+        text source
+        integer rows_read
+        integer rows_loaded
+        text error_message
+    }
+    data_quality_issues {
+        integer issue_id PK
+        integer run_id FK
+        varchar source_table
+        varchar check_name
+        varchar category
+        varchar severity
+        integer rows_affected
+        varchar action_taken
+        jsonb details
+    }
+    pipeline_runs ||--o{ data_quality_issues : "run_id"
